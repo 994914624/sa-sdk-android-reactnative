@@ -1,6 +1,7 @@
-package com.myrn;
+package com.rn_54;
 
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -8,6 +9,8 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableNativeMap;
+import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.Callback;
 import com.sensorsdata.analytics.android.sdk.SensorsDataAPI;
 
 import org.json.JSONException;
@@ -37,7 +40,7 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     }
 
     private static final String MODULE_NAME = "RNSensorsAnalyticsModule";
-    private static final String MODULE_VERSION = "1.0.0";
+    private static final String MODULE_VERSION = "1.0.1";
     private static final String LOGTAG = "SA.RN";
 
     /**
@@ -100,10 +103,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void track(String eventName, ReadableMap properties) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).track(eventName, convertToJSONObject(properties));
+            SensorsDataAPI.sharedInstance().track(eventName, convertToJSONObject(properties));
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -124,10 +127,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void trackTimerBegin(String eventName) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).trackTimerBegin(eventName);
+            SensorsDataAPI.sharedInstance().trackTimerBegin(eventName);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -146,12 +149,12 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
      *                  </Button>
      */
     @ReactMethod
-    public void trackTimerEnd(String eventName,ReadableMap properties) {
+    public void trackTimerEnd(String eventName, ReadableMap properties) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).trackTimerEnd(eventName,convertToJSONObject(properties));
+            SensorsDataAPI.sharedInstance().trackTimerEnd(eventName, convertToJSONObject(properties));
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -171,13 +174,12 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void clearTrackTimer() {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).clearTrackTimer();
+            SensorsDataAPI.sharedInstance().clearTrackTimer();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
-
 
 
     /**
@@ -193,10 +195,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void login(String loginId) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).login(loginId);
+            SensorsDataAPI.sharedInstance().login(loginId);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -213,10 +215,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void logout() {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).logout();
+            SensorsDataAPI.sharedInstance().logout();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -238,10 +240,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void trackInstallation(String eventName, ReadableMap properties) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).trackInstallation(eventName, convertToJSONObject(properties));
+            SensorsDataAPI.sharedInstance().trackInstallation(eventName, convertToJSONObject(properties));
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -266,10 +268,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void trackViewScreen(String url, ReadableMap properties) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).trackViewScreen(url, convertToJSONObject(properties));
+            SensorsDataAPI.sharedInstance().trackViewScreen(url, convertToJSONObject(properties));
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -288,10 +290,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void profileSet(ReadableMap properties) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).profileSet(convertToJSONObject(properties));
+            SensorsDataAPI.sharedInstance().profileSet(convertToJSONObject(properties));
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -313,10 +315,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void profileSetOnce(ReadableMap properties) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).profileSetOnce(convertToJSONObject(properties));
+            SensorsDataAPI.sharedInstance().profileSetOnce(convertToJSONObject(properties));
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -340,10 +342,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void profileIncrement(String property, Double value) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).profileIncrement(property, value);
+            SensorsDataAPI.sharedInstance().profileIncrement(property, value);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -365,10 +367,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void profileAppend(String property, String value) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).profileAppend(property, value);
+            SensorsDataAPI.sharedInstance().profileAppend(property, value);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -389,10 +391,10 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void profileUnset(String property) {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).profileUnset(property);
+            SensorsDataAPI.sharedInstance().profileUnset(property);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
         }
     }
 
@@ -411,10 +413,46 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void profileDelete() {
         try {
-            SensorsDataAPI.sharedInstance(getReactApplicationContext()).profileDelete();
+            SensorsDataAPI.sharedInstance().profileDelete();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(LOGTAG,e.toString()+"");
+            Log.e(LOGTAG, e.toString() + "");
+        }
+    }
+
+    /**
+     * 导出 getDistinctId 方法给 RN 使用.
+     * <p>
+     * 获取当前的 DistinctId.
+     * <p>
+     * successCallback 优先返回 mLoginId ，否则返回 mAnonymousId
+     * <p>
+     * RN 中使用示例：
+     * <Button
+     * title="Button"
+     * onPress={()=>
+     * SensorsDataAPI_Android.getDistinctId(success=>{
+     * console.log(success)
+     * },
+     * error=>{
+     * console.log(error)
+     * })
+     * }>
+     * </Button>
+     */
+    @ReactMethod
+    public void getDistinctId(Callback successCallback, Callback errorCallback) {
+        try {
+            String mLoginId = SensorsDataAPI.sharedInstance().getLoginId();
+            if (!TextUtils.isEmpty(mLoginId)) {
+                successCallback.invoke(mLoginId);
+            } else {
+                successCallback.invoke(SensorsDataAPI.sharedInstance().getAnonymousId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(LOGTAG, e.toString() + "");
+            errorCallback.invoke(e.getMessage());
         }
     }
 }

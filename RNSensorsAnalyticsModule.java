@@ -1,4 +1,4 @@
-package com.rn_54;
+package com.sensorsdata.analytics;
 
 
 import android.text.TextUtils;
@@ -7,7 +7,9 @@ import android.util.Log;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableNativeMap;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.Callback;
@@ -59,19 +61,18 @@ public class RNSensorsAnalyticsModule extends ReactContextBaseJavaModule {
             return null;
         }
 
-        JSONObject json = new JSONObject();
-        ReadableNativeMap map = (ReadableNativeMap) properties;
-        HashMap<String, Object> hashMap = map.toHashMap();
-        for (String key : hashMap.keySet()) {
-            if (key != null) {
-                Object value = hashMap.get(key);
-                if (value != null) {
-                    try {
-                        json.put(key, hashMap.get(key));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+        JSONObject json = null;
+        ReadableNativeMap nativeMap =null;
+        try {
+            nativeMap= (ReadableNativeMap) properties;
+            json = new JSONObject(properties.toString()).getJSONObject("NativeMap");
+        } catch (Exception e) {
+            Log.e(LOGTAG,  ""+e.getMessage());
+            String superName = nativeMap.getClass().getSuperclass().getSimpleName();
+            try {
+                json = new JSONObject(properties.toString()).getJSONObject(superName);
+            } catch (Exception e1) {
+                Log.e(LOGTAG,  ""+e1.getMessage());
             }
         }
         return json;
